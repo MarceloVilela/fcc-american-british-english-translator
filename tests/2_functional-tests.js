@@ -24,8 +24,32 @@ suite('Functional Tests', () => {
       `<span class="highlight">...</span>` tags when the "Translate" button is pressed.
     */
     test("Translation appended to the `translated-sentence` `div`", done => {
+      // american-to-british
+      const inputAmericanToBritish = 'Mangoes are my favorite fruit.';
+      const outputAmericanToBritish = 'Mangoes are my favourite fruit.';
 
-      // done();
+      document.querySelector('#locale-select').value = 'american-to-british'
+      document.querySelector('#text-input').value = inputAmericanToBritish;
+      document.querySelector('#translate-btn').click();
+
+      assert.equal(
+        document.querySelector('#translated-sentence').textContent,
+        outputAmericanToBritish
+      );
+
+      // british-to-american
+      const inputBritishToAmerican = 'We watched the footie match for a while.';
+      const outputBritishToAmerican = 'We watched the soccer match for a while.';
+
+      document.querySelector('#locale-select').value = 'british-to-american'
+      document.querySelector('#text-input').value = inputBritishToAmerican;
+      document.querySelector('#translate-btn').click();
+
+      assert.equal(
+        document.querySelector('#translated-sentence').textContent,
+        outputBritishToAmerican
+      );
+      done();
     });
 
     /* 
@@ -34,8 +58,18 @@ suite('Functional Tests', () => {
       `translated-sentence` `div` when the "Translate" button is pressed.
     */
     test("'Everything looks good to me!' message appended to the `translated-sentence` `div`", done => {
+      const input = 'ok.';
+      const output = 'Everything looks good to me!';
 
-      // done();
+      document.querySelector('#text-input').value = input;
+      document.querySelector('#translate-btn').click();
+
+      assert.equal(
+        document.querySelector('#translated-sentence').textContent,
+        output
+      );
+
+      done();
     });
 
     /* 
@@ -44,8 +78,30 @@ suite('Functional Tests', () => {
       the `error-msg` `div`.
     */
     test("'Error: No text to translate.' message appended to the `translated-sentence` `div`", done => {
+      // empty field
+      const inputBlank = '';
+      const output = 'Error: No text to translate.';
 
-      // done();
+      document.querySelector('#text-input').value = inputBlank;
+      document.querySelector('#translate-btn').click();
+
+      assert.equal(
+        document.querySelector('#translated-sentence').textContent,
+        output
+      );
+
+      // filled whit space
+      const inputOnlySpace = '   ';
+      
+      document.querySelector('#text-input').value = inputOnlySpace;
+      document.querySelector('#translate-btn').click();
+
+      assert.equal(
+        document.querySelector('#translated-sentence').textContent,
+        output
+      );
+
+      done();
     });
 
   });
@@ -56,8 +112,35 @@ suite('Functional Tests', () => {
       `divs` are cleared when the "Clear" button is pressed.
     */
     test("Text area, `translated-sentence`, and `error-msg` are cleared", done => {
+      // filled
+      const input = 'ok.';
+      const output = 'Everything looks good to me!';
 
-      // done();
+      document.querySelector('#text-input').value = input;
+      document.querySelector('#translate-btn').click();
+
+      assert.equal(
+        document.querySelector('#translated-sentence').textContent,
+        output
+      );
+
+      // cleaned
+      const inputCleared = '';
+      const outputCleared = '';
+
+      document.querySelector('#clear-btn').click();
+
+      assert.equal(
+        document.querySelector('#text-input').value,
+        inputCleared
+      );
+
+      assert.equal(
+        document.querySelector('#translated-sentence').textContent,
+        outputCleared
+      );
+
+      done();
     });
 
   });
